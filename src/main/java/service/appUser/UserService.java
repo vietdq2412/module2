@@ -2,6 +2,7 @@ package service.appUser;
 
 import file_data_IO.FileIO;
 import model.AppUser;
+import model.Product;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class UserService implements IUserService {
     public static AppUser currentUser;
     private final String USER_DATA_PATH = "user_data.txt";
     private final String CURRENT_USER_DATA_PATH = "currentUser.txt";
-    FileIO<AppUser> fileIO = (FileIO<AppUser>) FileIO.getInstance();
+    FileIO<Map<String, AppUser>> fileIO = (FileIO<Map<String, AppUser>>) FileIO.getInstance();
     private Map<String, AppUser> mapUser = new HashMap<>();
 
     public UserService() {
@@ -114,8 +115,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean delete(String id) {
-        return false;
+    public AppUser delete(String id) {
+        return null;
     }
 
     public Map<String, AppUser> getMapUser() {

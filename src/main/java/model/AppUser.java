@@ -63,7 +63,7 @@ public class AppUser implements Serializable {
 
     @Override
     public String toString() {
-        String str = String.format("|Name: %-10s|Username: %-10s|Password: %s", name,username,password);
+        String str = String.format("|Name: %-15s|Username: %-10s|Password: %s", name,username,password);
         return str;
     }
 }

@@ -16,7 +16,7 @@ public class FileIO<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public static FileIO<?> getInstance(){
+    public static FileIO<?> getInstance() {
         return instance;
     }
 
@@ -26,17 +26,18 @@ public class FileIO<T> {
 
     private static final String PATH = "C:\\Users\\vietd\\Desktop\\S\\CG\\Module 2\\demo1\\src\\main\\java\\data\\";
 
-    public boolean checkFile(String path){
-        if (new File(PATH + path).length() > 0){
+    public boolean checkFile(String path) {
+        if (new File(PATH + path).length() > 0) {
             return true;
         }
-        return  false;
+        return false;
     }
-    public void writeFile(String path, Map<String, T> map) {
+
+    public void writeFile(String path, T t) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH + path);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(map);
+            objectOutputStream.writeObject(t);
             fileOutputStream.close();
             objectOutputStream.close();
         } catch (FileNotFoundException e) {
@@ -44,16 +45,18 @@ public class FileIO<T> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    };
+    }
 
-    public Map<String, T> readFile(String path) {
+    ;
+
+    public T readFile(String path) {
         Map<String, T> map = new HashMap<>();
-
-        if (checkFile(path)){
+        T t = null;
+        if (checkFile(path)) {
             try {
                 FileInputStream fileInputStream = new FileInputStream(PATH + path);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                map = (HashMap<String, T>) objectInputStream.readObject();
+                t = (T) objectInputStream.readObject();
                 fileInputStream.close();
                 objectInputStream.close();
             } catch (FileNotFoundException e) {
@@ -64,10 +67,12 @@ public class FileIO<T> {
                 throw new RuntimeException(e);
             }
         }
-        return map;
-    };
+        return t;
+    }
 
-    public void clearFile(String path){
+    ;
+
+    public void clearFile(String path) {
         File file = new File(PATH + path);
         PrintWriter writer = null;
         try {

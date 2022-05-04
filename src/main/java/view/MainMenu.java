@@ -3,8 +3,13 @@ package view;
 import controller.ProductController;
 import controller.UserController;
 import controller.WeatherController;
+import model.Order;
+import model.Product;
+import service.order.OrderService;
+import service.product.ProductService;
 
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -24,14 +29,13 @@ public class MainMenu {
 
     public void mainMenu() {
         System.out.println("=========================");
-        System.out.println("== Hello " + userController.getCurUser().getName());
+        System.out.println("|== Hello " + userController.getCurUser().getName());
         System.out.println("========== Menu =========");
-        System.out.println("| 1. Show weather =======");
-        System.out.println("| 2. Sign up ============");
-        System.out.println("| 3. Show list user =====");
-        System.out.println("| 4. Log out ============");
-        System.out.println("| 5. Product management =");
-        System.out.println("=========================");
+        System.out.println("| 1. Show weather =======|");
+        System.out.println("| 3. Show list user =====|");
+        System.out.println("| 4. Log out ============|");
+        System.out.println("| 5. Product management =|");
+        System.out.println("=========================|");
         System.out.println("Enter your choice: ");
         int choice = 0;
         try {
@@ -65,6 +69,18 @@ public class MainMenu {
     }
 
     public static void main(String[] args) {
-        MainMenu.getInstance().mainMenu();
+        OrderService orderService = OrderService.getInstance();
+
+        ProductService productService = ProductService.getInstance();
+
+        Product product = productService.findById(3);
+
+        orderService.add(new Order(product, "order"));
+        orderService.add(new Order(productService.findById(1), "order"));
+        orderService.add(new Order(productService.findById(4), "order"));
+
+        Map<String, Order> map  = orderService.getOrderMap();
+
+        System.out.println(map.toString());
     }
 }

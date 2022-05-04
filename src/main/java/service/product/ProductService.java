@@ -1,7 +1,6 @@
 package service.product;
 
 import file_data_IO.FileIO;
-import model.Category;
 import model.Product;
 
 import java.util.HashMap;
@@ -12,7 +11,7 @@ public class ProductService implements IProductService {
     private final String PRODUCT_DATA_PATH = "product_data.txt";
     private Map<String, Product> mapProduct;
     private static final ProductService instance = new ProductService();
-    FileIO<Product> fileIO = (FileIO<Product>) FileIO.getInstance();
+    FileIO<Map<String, Product>> fileIO = (FileIO<Map<String, Product>>) FileIO.getInstance();
 
 
     private ProductService() {
@@ -65,8 +64,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public boolean delete(String id) {
-        return false;
+    public Product delete(String id) {
+        String key = String.valueOf(id);
+        Product product = mapProduct.remove(key);
+        updateData();
+        return product;
     }
     public int getLastId() {
         return lastId;
